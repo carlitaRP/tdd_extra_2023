@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { FormulaComponent } from './formula.component';
 
 describe('FormulaComponent', () => {
@@ -7,49 +8,85 @@ describe('FormulaComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FormulaComponent]
+      declarations: [FormulaComponent],
+      imports: [FormsModule]
     });
     fixture = TestBed.createComponent(FormulaComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('debería calcular el trabajo correctamente para fuerza positiva y distancia positiva', () => {
-    expect(component.calcularTrabajo(5, 10)).toBe(50);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('debería calcular el trabajo correctamente para fuerza positiva y distancia cero', () => {
-    expect(component.calcularTrabajo(7, 0)).toBe(0);
+  it('should calculate work correctly for positive force and positive distance', () => {
+    component.fuerza = 5;
+    component.distancia = 10;
+    component.calcular();
+    expect(component.resultado).toBe(50);
   });
 
-  it('debería calcular el trabajo correctamente para fuerza cero y distancia positiva', () => {
-    expect(component.calcularTrabajo(0, 15)).toBe(0);
+  it('should calculate work correctly for positive force and zero distance', () => {
+    component.fuerza = 7;
+    component.distancia = 0;
+    component.calcular();
+    expect(component.resultado).toBe(0);
   });
 
-  it('debería calcular el trabajo correctamente para fuerza negativa y distancia positiva', () => {
-    expect(component.calcularTrabajo(-3, 8)).toBe(-24);
+  it('should calculate work correctly for zero force and positive distance', () => {
+    component.fuerza = 0;
+    component.distancia = 15;
+    component.calcular();
+    expect(component.resultado).toBe(0);
   });
 
-  it('debería calcular el trabajo correctamente para fuerza positiva y distancia negativa', () => {
-    expect(component.calcularTrabajo(6, -5)).toBe(-30);
+  it('should calculate work correctly for negative force and positive distance', () => {
+    component.fuerza = -3;
+    component.distancia = 8;
+    component.calcular();
+    expect(component.resultado).toBe(-24);
   });
 
-  it('debería calcular el trabajo correctamente para fuerza negativa y distancia negativa', () => {
-    expect(component.calcularTrabajo(-2, -4)).toBe(8);
+  it('should calculate work correctly for positive force and negative distance', () => {
+    component.fuerza = 6;
+    component.distancia = -5;
+    component.calcular();
+    expect(component.resultado).toBe(-30);
   });
 
-  it('debería calcular el trabajo correctamente para fuerza cero y distancia cero', () => {
-    expect(component.calcularTrabajo(0, 0)).toBe(0);
+  it('should calculate work correctly for negative force and negative distance', () => {
+    component.fuerza = -2;
+    component.distancia = -4;
+    component.calcular();
+    expect(component.resultado).toBe(8);
   });
 
-  it('debería calcular el trabajo correctamente para números decimales', () => {
-    expect(component.calcularTrabajo(2.5, 4.5)).toBe(11.25);
+  it('should calculate work correctly for zero force and zero distance', () => {
+    component.fuerza = 0;
+    component.distancia = 0;
+    component.calcular();
+    expect(component.resultado).toBe(0);
   });
 
-  it('debería calcular el trabajo correctamente para grandes valores de fuerza y distancia', () => {
-    expect(component.calcularTrabajo(1000, 10000)).toBe(10000000);
+  it('should calculate work correctly for decimal numbers', () => {
+    component.fuerza = 2.5;
+    component.distancia = 4.5;
+    component.calcular();
+    expect(component.resultado).toBe(11.25);
   });
 
-  it('debería calcular el trabajo correctamente para valores mixtos', () => {
-    expect(component.calcularTrabajo(-2, 7)).toBe(-14);
+  it('should calculate work correctly for large values of force and distance', () => {
+    component.fuerza = 1000;
+    component.distancia = 10000;
+    component.calcular();
+    expect(component.resultado).toBe(10000000);
+  });
+
+  it('should calculate work correctly for mixed positive and negative values', () => {
+    component.fuerza = -2;
+    component.distancia = 7;
+    component.calcular();
+    expect(component.resultado).toBe(-14);
   });
 });
